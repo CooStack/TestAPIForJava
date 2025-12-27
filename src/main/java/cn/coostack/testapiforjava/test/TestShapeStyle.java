@@ -44,20 +44,32 @@ public class TestShapeStyle extends ParticleGroupStyle {
                             .displayer((uuid) -> {
                                 // style 嵌套
                                 return ParticleDisplayer.withStyle(
+                                        // 嵌套的style 里面写单个粒子
                                         new ParticleShapeStyle(uuid)
+                                                // 粒子样式
                                                 .appendBuilder(PointsBuilder.of(List.of())
                                                                 .addPolygonInCircle(4, 120, 2.0), (rel) -> {
-                                                            return new StyleDataBuilder().build();
+                                                            return new StyleDataBuilder()
+                                                                    // 单个粒子的属性
+                                                                    .addParticleControlerHandler((cont) -> {
+                                                                        cont.setInitInvoker((particle) -> {
+                                                                            particle.setColor(new Vector3f(1f, 1f, 0f));
+                                                                            return null;
+                                                                        });
+                                                                        return null;
+                                                                    })
+                                                                    .build();
                                                         }
-                                                )
+                                                        // 嵌套的样式的tick操作
+                                                ).toggleOnDisplay((style) -> {
+                                                    style.addPreTickAction((p) -> {
+                                                        // 默认对称轴是y轴， 然后每tick绕y轴旋转 PI/32
+                                                        style.rotateParticlesAsAxis(Math.PI / 32.0);
+                                                        return null;
+                                                    });
+                                                    return null;
+                                                })
                                 );
-                            })
-                            .addParticleControlerHandler((cont) -> {
-                                cont.setInitInvoker((particle) -> {
-                                    particle.setColor(new Vector3f(1f, 1f, 0f));
-                                    return null;
-                                });
-                                return null;
                             })
                             .build();
                 });
@@ -66,7 +78,7 @@ public class TestShapeStyle extends ParticleGroupStyle {
     @Override
     public void onDisplay() {
         addPreTickAction((style) -> {
-            style.rotateParticlesAsAxis(Math.PI / 16);
+            style.rotateParticlesAsAxis(Math.PI / 32);
             return null;
         });
     }
