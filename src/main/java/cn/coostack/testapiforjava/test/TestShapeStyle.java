@@ -42,16 +42,15 @@ public class TestShapeStyle extends ParticleGroupStyle {
                 .createWithStyleData((r) -> {
                     return new StyleDataBuilder()
                             .displayer((uuid) -> {
-                                ParticleDisplayer.withStyle(
+                                // style 嵌套
+                                return ParticleDisplayer.withStyle(
                                         new ParticleShapeStyle(uuid)
                                                 .appendBuilder(PointsBuilder.of(List.of())
                                                                 .addPolygonInCircle(4, 120, 2.0), (rel) -> {
-                                                            new StyleDataBuilder().build();
-                                                            return null;
+                                                            return new StyleDataBuilder().build();
                                                         }
                                                 )
                                 );
-                                return null;
                             })
                             .addParticleControlerHandler((cont) -> {
                                 cont.setInitInvoker((particle) -> {
