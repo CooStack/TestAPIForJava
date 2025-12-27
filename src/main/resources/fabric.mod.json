@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "testapiforjava",
+  "version": "${version}",
+  "name": "TestAPIForJava",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/testapiforjava/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "cn.coostack.testapiforjava.client.TestAPIForJavaDataGenerator"
+    ],
+    "client": [
+      "cn.coostack.testapiforjava.client.TestAPIForJavaClient"
+    ],
+    "main": [
+      "cn.coostack.testapiforjava.TestAPIForJava"
+    ]
+  },
+  "mixins": [
+    "testapiforjava.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
